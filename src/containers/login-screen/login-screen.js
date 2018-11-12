@@ -6,10 +6,6 @@ import { Button } from 'react-native-elements';
 
 class LoginScreen extends Component {
 
-  static navigationOptions = {
-    title: 'Login In',
-  };
-
   state = {
     email: '',
     password: ''

@@ -3,6 +3,11 @@ import { connect } from "react-redux";
 import { Button } from 'react-native-elements';
 import { TextInput, View, Text, StyleSheet } from 'react-native';
 
+import {
+  saveUser,
+  loginUser
+} from "../../store/user/user-action/userActionIndex";
+
 class SignUpScreen extends Component {
 
   static navigationOptions = {
@@ -74,7 +79,20 @@ class SignUpScreen extends Component {
   }
 }
 
-export default SignUpScreen
+const mapStateToProps = state => {
+  return {
+    user: state.user.user,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveUser: (user) => dispatch(saveUser(user))
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpScreen);
 
 var styles = StyleSheet.create({
   container: {
