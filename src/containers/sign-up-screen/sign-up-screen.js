@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from '../../../axios';
 import { connect } from "react-redux";
 import { Button } from 'react-native-elements';
 import { TextInput, View, Text, StyleSheet } from 'react-native';
@@ -22,6 +23,18 @@ class SignUpScreen extends Component {
     password: '',
     confirmPassword: ''
   };
+
+  registerUser = () => {
+    let {firstName, lastName, email, confirmEmail, password, confirmPassword} = this.state;
+
+    axios.post('/employee/register-employee', {
+      email,
+      password: password,
+      employee_password: password,
+      repeat_employee_password: password
+    }
+    ).then(suc => alert(suc)).catch(err => alert(err))
+  }
 
   render() {
     return (
@@ -71,7 +84,7 @@ class SignUpScreen extends Component {
           <Button
             buttonStyle={styles.buttonGreen}
             title='Register'
-            onPress={() => alert('this will be implemented')}
+            onPress={() => this.registerUser()}
           />
         </View>
       </View>
