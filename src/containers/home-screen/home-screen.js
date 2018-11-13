@@ -7,6 +7,13 @@ class HomeScreen extends Component {
     title: 'Home',
   };
 
+  componentDidMount() {
+    // TODO implement logic to know is user logged in, for now always redirect on login page.
+    if (true) {
+      this.props.navigation.navigate('Login')
+    }
+  }
+
   render() {
     return (
       <View  style={styles.container}>
