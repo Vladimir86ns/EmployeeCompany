@@ -66,7 +66,7 @@ class SignUpScreen extends Component {
           <Button
             title='Login In'
             buttonStyle={styles.buttonRed}
-            onPress={() => alert('this will be implemented')}
+            onPress={() => this.props.navigation.navigate('Login')}
             />
           <Button
             buttonStyle={styles.buttonGreen}

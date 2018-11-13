@@ -11,6 +11,10 @@ class LoginScreen extends Component {
     password: ''
   };
 
+  static navigationOptions = {
+    title: 'Login In',
+  };
+
   render() {
     return (
       <View  style={styles.container}>
@@ -35,7 +39,7 @@ class LoginScreen extends Component {
           <Button
             buttonStyle={styles.buttonGreen}
             title='Sign Up'
-            onPress={() => alert('this will be implemented')}
+            onPress={() => this.props.navigation.navigate('SignUp')}
           />
         </View>
       </View>
