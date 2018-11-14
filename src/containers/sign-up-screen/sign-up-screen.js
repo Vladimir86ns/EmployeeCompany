@@ -19,19 +19,20 @@ class SignUpScreen extends Component {
     firstName: '',
     lastName: '',
     email: '',
-    confirmEmail: '',
     password: '',
     confirmPassword: ''
   };
 
   registerUser = () => {
-    let {firstName, lastName, email, confirmEmail, password, confirmPassword} = this.state;
+    let {firstName, lastName, email, password, confirmPassword} = this.state;
 
     axios.post('/employee/register-employee', {
+      first_name: firstName,
+      last_name: lastName,
       email,
-      password: password,
-      employee_password: password,
-      repeat_employee_password: password
+      password,
+      password_confirm: confirmPassword,
+      company_id: 4
     }
     ).then(suc => alert(suc)).catch(err => alert(err))
   }
@@ -56,12 +57,6 @@ class SignUpScreen extends Component {
           style={styles.textInput}
           onChangeText={(email) => this.setState({email})}
           value={this.state.email}
-        />
-        <Text style={styles.text}>Confirm email</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={(confirmEmail) => this.setState({confirmEmail})}
-          value={this.state.confirmEmail}
         />
         <Text style={styles.text}>Password</Text>
         <TextInput
