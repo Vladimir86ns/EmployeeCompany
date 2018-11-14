@@ -1,9 +1,9 @@
 import { SAVE_USER, LOGIN_USER } from './userActionTypes';
 
-export const saveUser = (user) => {
+export const saveUser = (state) => {
     return {
         type: SAVE_USER,
-        user: user
+        state: state
     };
 };
 

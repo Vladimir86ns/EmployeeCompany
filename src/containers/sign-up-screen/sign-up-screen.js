@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from '../../../axios';
 import { connect } from "react-redux";
 import { Button } from 'react-native-elements';
 import { TextInput, View, Text, StyleSheet } from 'react-native';
@@ -24,17 +23,7 @@ class SignUpScreen extends Component {
   };
 
   registerUser = () => {
-    let {firstName, lastName, email, password, confirmPassword} = this.state;
-
-    axios.post('/employee/register-employee', {
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      password,
-      password_confirm: confirmPassword,
-      company_id: 4
-    }
-    ).then(suc => alert(suc)).catch(err => alert(err))
+    this.props.saveUser(this.state);
   }
 
   render() {
@@ -95,7 +84,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveUser: (user) => dispatch(saveUser(user))
+    saveUser: (state) => dispatch(saveUser(state))
   };
 };
 
