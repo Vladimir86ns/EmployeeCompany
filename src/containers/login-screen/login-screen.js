@@ -7,7 +7,7 @@ class LoginScreen extends Component {
 
   state = {
     email: '',
-    password: ''
+    password: '',
   };
 
   static navigationOptions = {

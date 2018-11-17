@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Button } from 'react-native-elements';
 import axios from '../../../axios';
-import { TextInput, View, Text, StyleSheet } from 'react-native';
+import { TextInput, View, Text, StyleSheet, Picker } from 'react-native';
 
 import {
   saveUser,
@@ -16,15 +16,24 @@ class SignUpScreen extends Component {
   };
 
   state = {
-    firstName: 'dovla',
-    lastName: 'vlada',
-    email: `vlada@${new Date().getTime()}.com`,
-    password: 'test',
-    confirmPassword: 'test'
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    companyId: '',
+    companies: []
   };
 
+  componentWillMount() {
+    this.fetchCompanies();
+  }
+
+  /**
+   * Register Employee.
+   */
   registerUser = () => {
-    let {firstName, lastName, email, password, confirmPassword} = this.state;
+    let {firstName, lastName, email, password, confirmPassword, companyId} = this.state;
 
     axios.post('/employee/register-employee', {
       first_name: firstName,
@@ -32,7 +41,7 @@ class SignUpScreen extends Component {
       email,
       password,
       password_confirm: confirmPassword,
-      company_id: 4
+      company_id: companyId
     })
     .then(suc =>{
         this.props.saveUser(suc.data)
@@ -42,7 +51,48 @@ class SignUpScreen extends Component {
     .catch(err => alert(err))
   }
 
+  /**
+   * Fetch companies from server.
+   */
+  fetchCompanies = () => {
+    axios.get('/company/all')
+    .then(success => {
+      this.setState({
+        companies: success.data.data
+      })
+    })
+    .catch(error => {
+      alert(error)
+    });
+  }
+
+  /**
+   * Check state has companies and display it.
+   */
+  getCompanies = () => {
+    let companies;
+    if (this.state.companies.length === 0) {
+      companies = <Text style={styles.text}>Loading Companies...</Text>
+    } else {
+      companies =
+        <Picker
+        selectedValue={this.state.companyId}
+        style={{ height: 50, width: 200 }}
+        onValueChange={(itemValue, itemIndex) => this.setState({companyId: itemValue})}>
+        <Picker.Item key={0} label="Choose company" value={0} />
+        {
+          this.state.companies.map(company => {
+            return <Picker.Item key={company.id} label={company.name + ` (${company.city})`} value={company.id} />
+          })
+        }
+      </Picker>
+    }
+
+    return companies;
+  }
+
   render() {
+
     return (
       <View  style={styles.container}>
         <Text style={styles.text}>First name</Text>
@@ -75,6 +125,7 @@ class SignUpScreen extends Component {
           onChangeText={(confirmPassword) => this.setState({confirmPassword})}
           value={this.state.confirmPassword}
         />
+        {this.getCompanies()}
         <View style={styles.buttonContainer}>
           <Button
             title='Login In'
