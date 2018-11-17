@@ -16,12 +16,38 @@ class SignUpScreen extends Component {
   };
 
   state = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    companyId: '',
+    controls: {
+      first_name: {
+        value: '',
+        valid: true,
+        validationMessage: ''
+      },
+      last_name: {
+        value: '',
+        valid: true,
+        validationMessage: ''
+      },
+      email: {
+        value: '',
+        valid: true,
+        validationMessage: ''
+      },
+      password: {
+        value: '',
+        valid: true,
+        validationMessage: ''
+      },
+      password_confirm: {
+        value: '',
+        valid: true,
+        validationMessage: ''
+      },
+      company_id: {
+        value: '',
+        valid: true,
+        validationMessage: ''
+      }
+    },
     companies: []
   };
 
@@ -29,26 +55,45 @@ class SignUpScreen extends Component {
     this.fetchCompanies();
   }
 
+  updateState = (key, val) => {
+
+    console.log('update state', key, val);
+    this.setState(prevState => {
+      return {
+        controls: {
+        ...prevState.controls,
+          [key]: {
+            ...prevState.controls[key],
+            value: val
+        }}}
+    });
+  }
+
   /**
    * Register Employee.
    */
   registerUser = () => {
-    let {firstName, lastName, email, password, confirmPassword, companyId} = this.state;
+    console.log('USA');
+    console.log(this.state.controls);
+    let {first_name, last_name, email, password, password_confirm, company_id} = this.state.controls;
 
     axios.post('/employee/register-employee', {
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      password,
-      password_confirm: confirmPassword,
-      company_id: companyId
+      first_name: first_name.value,
+      last_name: last_name.value,
+      email: email.value,
+      password: password.value,
+      password_confirm: password_confirm.value,
+      company_id: company_id.value
     })
     .then(suc =>{
         this.props.saveUser(suc.data)
         this.props.navigation.navigate('Home')
       }
     )
-    .catch(err => alert(err))
+    .catch(err => {
+      console.log(err);
+      alert(err.message)
+    })
   }
 
   /**
@@ -78,7 +123,7 @@ class SignUpScreen extends Component {
         <Picker
         selectedValue={this.state.companyId}
         style={{ height: 50, width: 200 }}
-        onValueChange={(itemValue, itemIndex) => this.setState({companyId: itemValue})}>
+        onValueChange={(val) => this.updateState('company_id', val)}>
         <Picker.Item key={0} label="Choose company" value={0} />
         {
           this.state.companies.map(company => {
@@ -97,32 +142,37 @@ class SignUpScreen extends Component {
       <View  style={styles.container}>
         <Text style={styles.text}>First name</Text>
         <TextInput
+          placeholder="First Name"
           style={styles.textInput}
-          onChangeText={(firstName) => this.setState({firstName})}
+          onChangeText={(val) => this.updateState('first_name', val)}
           value={this.state.firstName}
         />
         <Text style={styles.text}>Last name</Text>
         <TextInput
+          placeholder="Last Name"
           style={styles.textInput}
-          onChangeText={(lastName) => this.setState({lastName})}
+          onChangeText={(val) => this.updateState('last_name', val)}
           value={this.state.lastName}
         />
         <Text style={styles.text}>Email</Text>
         <TextInput
+          placeholder="Email"
           style={styles.textInput}
-          onChangeText={(email) => this.setState({email})}
+          onChangeText={(val) => this.updateState('email', val)}
           value={this.state.email}
         />
         <Text style={styles.text}>Password</Text>
         <TextInput
+          placeholder="Password"
           style={styles.textInput}
-          onChangeText={(password) => this.setState({password})}
+          onChangeText={(val) => this.updateState('password', val)}
           value={this.state.password}
         />
         <Text style={styles.text}>Confirm password</Text>
         <TextInput
+          placeholder="Confirm Password"
           style={styles.textInput}
-          onChangeText={(confirmPassword) => this.setState({confirmPassword})}
+          onChangeText={(val) => this.updateState('password_confirm', val)}
           value={this.state.confirmPassword}
         />
         {this.getCompanies()}
