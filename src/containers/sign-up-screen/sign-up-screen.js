@@ -56,8 +56,6 @@ class SignUpScreen extends Component {
   }
 
   updateState = (key, val) => {
-
-    console.log('update state', key, val);
     this.setState(prevState => {
       return {
         controls: {
@@ -73,8 +71,6 @@ class SignUpScreen extends Component {
    * Register Employee.
    */
   registerUser = () => {
-    console.log('USA');
-    console.log(this.state.controls);
     let {first_name, last_name, email, password, password_confirm, company_id} = this.state.controls;
 
     axios.post('/employee/register-employee', {
@@ -91,8 +87,7 @@ class SignUpScreen extends Component {
       }
     )
     .catch(err => {
-      console.log(err);
-      alert(err.message)
+      alert(err.response.data)
     })
   }
 
@@ -121,7 +116,7 @@ class SignUpScreen extends Component {
     } else {
       companies =
         <Picker
-        selectedValue={this.state.companyId}
+        selectedValue={this.state.controls.company_id.value}
         style={{ height: 50, width: 200 }}
         onValueChange={(val) => this.updateState('company_id', val)}>
         <Picker.Item key={0} label="Choose company" value={0} />
