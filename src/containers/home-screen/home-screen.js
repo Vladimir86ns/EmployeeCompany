@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { View, Text, StyleSheet} from 'react-native';
 
 class HomeScreen extends Component {
 
   static navigationOptions = {
-    title: 'Home',
+    title:  'Home',
   };
 
   componentDidMount() {
@@ -15,6 +16,9 @@ class HomeScreen extends Component {
   }
 
   render() {
+    if (this.props.user.first_name) {
+      alert(this.props.user.first_name);
+    }
     return (
       <View  style={styles.container}>
         <Text style={styles.text}>Home</Text>
@@ -23,7 +27,20 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+const mapStateToProps = state => {
+  return {
+    user: state.user.user,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      //
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
 var styles = StyleSheet.create({
   container: {
