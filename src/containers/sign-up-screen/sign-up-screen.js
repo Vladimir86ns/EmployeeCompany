@@ -67,6 +67,46 @@ class SignUpScreen extends Component {
     });
   }
 
+  updateValidationMessages = (data) => {
+    let keys = Object.keys(data);
+    keys.forEach(field => {
+      this.setState(prevState => {
+        return {
+          controls: {
+          ...prevState.controls,
+            [field]: {
+              ...prevState.controls[field],
+              valid: false,
+              validationMessage: data[field]
+          }}}
+      });
+    });
+
+    this.resetValidationMessages(keys, 5000);
+  }
+
+  /**
+   * Reset validation messages.
+   * @param {array} keys field names which should show message
+   * @param {number} time after how long to remove validation messages
+   */
+  resetValidationMessages = (keys, time) => {
+    setTimeout(() => {
+      keys.forEach(field => {
+        this.setState(prevState => {
+          return {
+            controls: {
+            ...prevState.controls,
+              [field]: {
+                ...prevState.controls[field],
+                valid: true,
+                validationMessage: ''
+            }}}
+        });
+      });
+    }, time);
+  }
+
   /**
    * Register Employee.
    */
@@ -87,7 +127,7 @@ class SignUpScreen extends Component {
       }
     )
     .catch(err => {
-      alert(err.response.data)
+      this.updateValidationMessages(err.response.data);
     })
   }
 
@@ -115,17 +155,24 @@ class SignUpScreen extends Component {
       companies = <Text style={styles.text}>Loading Companies...</Text>
     } else {
       companies =
-        <Picker
-        selectedValue={this.state.controls.company_id.value}
-        style={{ height: 50, width: 200 }}
-        onValueChange={(val) => this.updateState('company_id', val)}>
-        <Picker.Item key={0} label="Choose company" value={0} />
+      <View>
         {
-          this.state.companies.map(company => {
-            return <Picker.Item key={company.id} label={company.name + ` (${company.city})`} value={company.id} />
-          })
+          this.state.controls.company_id.valid ?
+          <Text style={styles.text}>Company</Text> :
+          <Text style={styles.textWarning}>Company is required!</Text>
         }
-      </Picker>
+          <Picker
+          selectedValue={this.state.controls.company_id.value}
+          style={{ height: 50, width: 200 }}
+          onValueChange={(val) => this.updateState('company_id', val)}>
+          <Picker.Item key={0} label="Choose company" value={0} />
+          {
+            this.state.companies.map(company => {
+              return <Picker.Item key={company.id} label={company.name + ` (${company.city})`} value={company.id} />
+            })
+          }
+        </Picker>
+      </View>
     }
 
     return companies;
@@ -135,35 +182,55 @@ class SignUpScreen extends Component {
 
     return (
       <View  style={styles.container}>
-        <Text style={styles.text}>First name</Text>
+        {
+         this.state.controls.first_name.valid ?
+          <Text style={styles.text}>First name</Text> :
+          <Text style={styles.textWarning}>{this.state.controls.first_name.validationMessage}</Text>
+        }
         <TextInput
           placeholder="First Name"
           style={styles.textInput}
           onChangeText={(val) => this.updateState('first_name', val)}
           value={this.state.firstName}
         />
-        <Text style={styles.text}>Last name</Text>
+        {
+         this.state.controls.last_name.valid ?
+          <Text style={styles.text}>Last name</Text> :
+          <Text style={styles.textWarning}>{this.state.controls.last_name.validationMessage}</Text>
+        }
         <TextInput
           placeholder="Last Name"
           style={styles.textInput}
           onChangeText={(val) => this.updateState('last_name', val)}
           value={this.state.lastName}
         />
-        <Text style={styles.text}>Email</Text>
+        {
+         this.state.controls.email.valid ?
+          <Text style={styles.text}>Email</Text> :
+          <Text style={styles.textWarning}>{this.state.controls.email.validationMessage}</Text>
+        }
         <TextInput
           placeholder="Email"
           style={styles.textInput}
           onChangeText={(val) => this.updateState('email', val)}
           value={this.state.email}
         />
-        <Text style={styles.text}>Password</Text>
+        {
+         this.state.controls.password.valid ?
+          <Text style={styles.text}>Password</Text> :
+          <Text style={styles.textWarning}>{this.state.controls.password.validationMessage}</Text>
+        }
         <TextInput
           placeholder="Password"
           style={styles.textInput}
           onChangeText={(val) => this.updateState('password', val)}
           value={this.state.password}
         />
-        <Text style={styles.text}>Confirm password</Text>
+        {
+         this.state.controls.password_confirm.valid ?
+          <Text style={styles.text}>Confirm Password</Text> :
+          <Text style={styles.textWarning}>{this.state.controls.password_confirm.validationMessage}</Text>
+        }
         <TextInput
           placeholder="Confirm Password"
           style={styles.textInput}
@@ -225,7 +292,13 @@ var styles = StyleSheet.create({
   text: {
     fontSize: 20,
     marginTop: 3,
+    textAlign: 'center'
+  },
+  textWarning: {
+    fontSize: 20,
+    marginTop: 3,
     textAlign: 'center',
+    color: 'red'
   },
   // BUTTONS //
   buttonContainer: {
