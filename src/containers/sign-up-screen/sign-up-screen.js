@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Button } from 'react-native-elements';
 import axios from '../../../axios';
+import validate from '../../utility/validation';
 import { TextInput, View, Text, StyleSheet, Picker } from 'react-native';
 
 import {
-  saveUser,
-  loginUser
+  saveUser
 } from "../../store/user/user-action/userActionIndex";
 
 class SignUpScreen extends Component {
@@ -20,34 +20,59 @@ class SignUpScreen extends Component {
       first_name: {
         value: '',
         valid: true,
-        validationMessage: ''
+        validationMessage: '',
+        validationRules: {
+          required: true,
+          minLength: 3
+        }
       },
       last_name: {
         value: '',
         valid: true,
-        validationMessage: ''
+        validationMessage: '',
+        validationRules: {
+          required: true,
+          minLength: 3
+        }
       },
       email: {
         value: '',
         valid: true,
-        validationMessage: ''
+        validationMessage: '',
+        validationRules: {
+          required: true,
+          isEmail: true
+        }
       },
       password: {
         value: '',
         valid: true,
-        validationMessage: ''
+        validationMessage: '',
+        validationRules: {
+          required: true,
+          minLength: 6
+        }
       },
       password_confirm: {
         value: '',
         valid: true,
-        validationMessage: ''
+        validationMessage: '',
+        validationRules: {
+          required: true,
+          minLength: 6
+        }
       },
       company_id: {
         value: '',
         valid: true,
-        validationMessage: ''
+        validationMessage: '',
+        validationRules: {
+          required: true,
+          isInteger: true
+        }
       }
     },
+    formValid: true,
     companies: []
   };
 
@@ -85,6 +110,26 @@ class SignUpScreen extends Component {
     this.resetValidationMessages(keys, 5000);
   }
 
+  validateForm = (field) => {
+    this.setState(prevState => {
+      const validation = validate(
+          field,
+          this.state.controls[field].value,
+          this.state.controls[field].validationRules
+        )
+
+      return {
+        formValid: validation.valid,
+        controls: {
+        ...prevState.controls,
+          [field]: {
+            ...prevState.controls[field],
+            valid: validation.valid,
+            validationMessage: validation.message
+        }}}
+    });
+  }
+
   /**
    * Reset validation messages.
    * @param {array} keys field names which should show message
@@ -107,9 +152,6 @@ class SignUpScreen extends Component {
     }, time);
   }
 
-  /**
-   * Register Employee.
-   */
   registerUser = () => {
     let {first_name, last_name, email, password, password_confirm, company_id} = this.state.controls;
 
@@ -191,6 +233,7 @@ class SignUpScreen extends Component {
           placeholder="First Name"
           style={styles.textInput}
           onChangeText={(val) => this.updateState('first_name', val)}
+          onEndEditing={() => this.validateForm('first_name')}
           value={this.state.firstName}
         />
         {
@@ -202,6 +245,7 @@ class SignUpScreen extends Component {
           placeholder="Last Name"
           style={styles.textInput}
           onChangeText={(val) => this.updateState('last_name', val)}
+          onEndEditing={() => this.validateForm('last_name')}
           value={this.state.lastName}
         />
         {
@@ -213,6 +257,7 @@ class SignUpScreen extends Component {
           placeholder="Email"
           style={styles.textInput}
           onChangeText={(val) => this.updateState('email', val)}
+          onEndEditing={() => this.validateForm('email')}
           value={this.state.email}
         />
         {
@@ -224,6 +269,7 @@ class SignUpScreen extends Component {
           placeholder="Password"
           style={styles.textInput}
           onChangeText={(val) => this.updateState('password', val)}
+          onEndEditing={() => this.validateForm('password')}
           value={this.state.password}
         />
         {
@@ -235,6 +281,7 @@ class SignUpScreen extends Component {
           placeholder="Confirm Password"
           style={styles.textInput}
           onChangeText={(val) => this.updateState('password_confirm', val)}
+          onEndEditing={() => this.validateForm('password_confirm')}
           value={this.state.confirmPassword}
         />
         {this.getCompanies()}
