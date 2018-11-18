@@ -51,7 +51,7 @@ class SignUpScreen extends Component {
         validationMessage: '',
         validationRules: {
           required: true,
-          minLength: 6
+          minLength: 3
         }
       },
       password_confirm: {
@@ -60,7 +60,7 @@ class SignUpScreen extends Component {
         validationMessage: '',
         validationRules: {
           required: true,
-          minLength: 6
+          minLength: 3
         }
       },
       company_id: {

@@ -8,7 +8,7 @@ class HomeScreen extends Component {
     title:  'Home',
   };
 
-  componentDidMount() {
+  componentWillMount(){
     if (Object.keys(this.props.user).length === 0) {
       this.props.navigation.navigate('Login')
     }
@@ -29,14 +29,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-      //
-  };
-};
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps, null)(HomeScreen);
 
 var styles = StyleSheet.create({
   container: {
