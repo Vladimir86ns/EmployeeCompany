@@ -119,6 +119,7 @@ class SignUpScreen extends Component {
         )
 
       return {
+        formValid: validation.valid,
         controls: {
         ...prevState.controls,
           [field]: {
