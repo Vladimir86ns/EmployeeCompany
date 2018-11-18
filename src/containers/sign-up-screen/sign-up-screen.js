@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { Button } from 'react-native-elements';
 import axios from '../../../axios';
 import validate from '../../utility/validation';
-import { TextInput, View, Text, StyleSheet, Picker } from 'react-native';
+import styles from './sign-up-screen-style';
+import { TextInput, View, Text, Picker } from 'react-native';
 
 import {
   saveUser
@@ -80,6 +81,11 @@ class SignUpScreen extends Component {
     this.fetchCompanies();
   }
 
+  /**
+   * Update state for given field on text change event.
+   * @param {string} key field name which value need to be updated
+   * @param {mix} val value for given field name
+   */
   updateState = (key, val) => {
     this.setState(prevState => {
       return {
@@ -92,6 +98,10 @@ class SignUpScreen extends Component {
     });
   }
 
+  /**
+   * On request failed, update validation message for each field.
+   * @param {object} data request failed object with errors
+   */
   updateValidationMessages = (data) => {
     let keys = Object.keys(data);
     keys.forEach(field => {
@@ -110,6 +120,10 @@ class SignUpScreen extends Component {
     this.resetValidationMessages(keys, 5000);
   }
 
+  /**
+   * Validate each field onEditEnd.
+   * @param {string} field field names which should be validate
+   */
   validateForm = (field) => {
     this.setState(prevState => {
       const validation = validate(
@@ -152,6 +166,9 @@ class SignUpScreen extends Component {
     }, time);
   }
 
+  /**
+   * Register employee
+   */
   registerUser = () => {
     let {first_name, last_name, email, password, password_confirm, company_id} = this.state.controls;
 
@@ -316,54 +333,3 @@ const mapDispatchToProps = dispatch => {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpScreen);
-
-var styles = StyleSheet.create({
-  container: {
-    marginLeft: '10%',
-    marginRight: '10%'
-  },
-  headline: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 40,
-    marginTop: 0,
-    height: 60,
-    paddingTop: '3%'
-  },
-  textInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 20,
-  },
-  text: {
-    fontSize: 20,
-    marginTop: 3,
-    textAlign: 'center'
-  },
-  textWarning: {
-    fontSize: 20,
-    marginTop: 3,
-    textAlign: 'center',
-    color: 'red'
-  },
-  // BUTTONS //
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  buttonRed: {
-    backgroundColor: 'red',
-    width: 120,
-    height: 40,
-    borderRadius: 20,
-    marginTop: 10
-  },
-  buttonGreen: {
-    backgroundColor: 'green',
-    width: 120,
-    height: 40,
-    borderRadius: 20,
-    marginTop: 10
-  }
-});
