@@ -4,7 +4,8 @@ import { Button } from 'react-native-elements';
 import axios from '../../../axios';
 import validate from '../../utility/validation';
 import styles from './sign-up-screen-style';
-import { TextInput, View, Text, Picker } from 'react-native';
+import CustomInputText from '../../component/custom_input/custom-input-text';
+import { View, Text, Picker } from 'react-native';
 
 import {
   saveUser
@@ -19,6 +20,7 @@ class SignUpScreen extends Component {
   state = {
     controls: {
       first_name: {
+        label: 'First Name',
         value: '',
         valid: true,
         validationMessage: '',
@@ -28,6 +30,7 @@ class SignUpScreen extends Component {
         }
       },
       last_name: {
+        label: 'Last Name',
         value: '',
         valid: true,
         validationMessage: '',
@@ -37,6 +40,7 @@ class SignUpScreen extends Component {
         }
       },
       email: {
+        label: 'Email',
         value: '',
         valid: true,
         validationMessage: '',
@@ -46,6 +50,7 @@ class SignUpScreen extends Component {
         }
       },
       password: {
+        label: 'Password',
         value: '',
         valid: true,
         validationMessage: '',
@@ -55,6 +60,7 @@ class SignUpScreen extends Component {
         }
       },
       password_confirm: {
+        label: 'Password Confirm',
         value: '',
         valid: true,
         validationMessage: '',
@@ -64,6 +70,7 @@ class SignUpScreen extends Component {
         }
       },
       company_id: {
+        label: 'Company',
         value: '',
         valid: true,
         validationMessage: '',
@@ -217,7 +224,7 @@ class SignUpScreen extends Component {
       <View>
         {
           this.state.controls.company_id.valid ?
-          <Text style={styles.text}>Company</Text> :
+          <Text style={styles.text}>{this.state.controls.company_id.label}</Text> :
           <Text style={styles.textWarning}>Company is required!</Text>
         }
           <Picker
@@ -241,66 +248,51 @@ class SignUpScreen extends Component {
 
     return (
       <View  style={styles.container}>
-        {
-         this.state.controls.first_name.valid ?
-          <Text style={styles.text}>First name</Text> :
-          <Text style={styles.textWarning}>{this.state.controls.first_name.validationMessage}</Text>
-        }
-        <TextInput
-          placeholder="First Name"
-          style={styles.textInput}
+        <CustomInputText
+          labelName={this.state.controls.first_name.label}
+          fieldName='first_name'
+          isValid={this.state.controls.first_name.valid}
+          validationMessage={this.state.controls.first_name.validationMessage}
+          value={this.state.controls.first_name.value}
           onChangeText={(val) => this.updateState('first_name', val)}
           onEndEditing={() => this.validateForm('first_name')}
-          value={this.state.firstName}
-        />
-        {
-         this.state.controls.last_name.valid ?
-          <Text style={styles.text}>Last name</Text> :
-          <Text style={styles.textWarning}>{this.state.controls.last_name.validationMessage}</Text>
-        }
-        <TextInput
-          placeholder="Last Name"
-          style={styles.textInput}
+          />
+        <CustomInputText
+          labelName={this.state.controls.last_name.label}
+          fieldName='last_name'
+          isValid={this.state.controls.last_name.valid}
+          validationMessage={this.state.controls.last_name.validationMessage}
+          value={this.state.controls.last_name.value}
           onChangeText={(val) => this.updateState('last_name', val)}
           onEndEditing={() => this.validateForm('last_name')}
-          value={this.state.lastName}
-        />
-        {
-         this.state.controls.email.valid ?
-          <Text style={styles.text}>Email</Text> :
-          <Text style={styles.textWarning}>{this.state.controls.email.validationMessage}</Text>
-        }
-        <TextInput
-          placeholder="Email"
-          style={styles.textInput}
+          />
+        <CustomInputText
+          labelName={this.state.controls.email.label}
+          fieldName='email'
+          isValid={this.state.controls.email.valid}
+          validationMessage={this.state.controls.email.validationMessage}
+          value={this.state.controls.email.value}
           onChangeText={(val) => this.updateState('email', val)}
           onEndEditing={() => this.validateForm('email')}
-          value={this.state.email}
-        />
-        {
-         this.state.controls.password.valid ?
-          <Text style={styles.text}>Password</Text> :
-          <Text style={styles.textWarning}>{this.state.controls.password.validationMessage}</Text>
-        }
-        <TextInput
-          placeholder="Password"
-          style={styles.textInput}
+          />
+        <CustomInputText
+          labelName={this.state.controls.password.label}
+          fieldName='password'
+          isValid={this.state.controls.password.valid}
+          validationMessage={this.state.controls.password.validationMessage}
+          value={this.state.controls.password.value}
           onChangeText={(val) => this.updateState('password', val)}
           onEndEditing={() => this.validateForm('password')}
-          value={this.state.password}
-        />
-        {
-         this.state.controls.password_confirm.valid ?
-          <Text style={styles.text}>Confirm Password</Text> :
-          <Text style={styles.textWarning}>{this.state.controls.password_confirm.validationMessage}</Text>
-        }
-        <TextInput
-          placeholder="Confirm Password"
-          style={styles.textInput}
+          />
+        <CustomInputText
+          labelName={this.state.controls.password_confirm.label}
+          fieldName='password_confirm'
+          isValid={this.state.controls.password_confirm.valid}
+          validationMessage={this.state.controls.password_confirm.validationMessage}
+          value={this.state.controls.password_confirm.value}
           onChangeText={(val) => this.updateState('password_confirm', val)}
           onEndEditing={() => this.validateForm('password_confirm')}
-          value={this.state.confirmPassword}
-        />
+          />
         {this.getCompanies()}
         <View style={styles.buttonContainer}>
           <Button

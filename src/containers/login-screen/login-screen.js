@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import axios from '../../../axios';
 import styles from './login-screen-style';
-import { TextInput, View, Text } from 'react-native';
+import { View } from 'react-native';
 import validate from '../../utility/validation';
+import CustomInputText from '../../component/custom_input/custom-input-text';
 
 import { Button } from 'react-native-elements';
 
@@ -16,6 +17,7 @@ class LoginScreen extends Component {
   state = {
     controls: {
       email: {
+        label: 'Email',
         value: '',
         valid: true,
         validationMessage: '',
@@ -25,6 +27,7 @@ class LoginScreen extends Component {
         }
       },
       password: {
+        label: 'Password',
         value: '',
         valid: true,
         validationMessage: '',
@@ -39,6 +42,12 @@ class LoginScreen extends Component {
   static navigationOptions = {
     title: 'Login In',
   };
+
+  componentWillMount(){
+    if (Object.keys(this.props.user).length === 0) {
+      this.props.navigation.navigate('Login')
+    }
+  }
 
   /**
    * Update state for given field on text change event.
@@ -145,28 +154,24 @@ class LoginScreen extends Component {
   render() {
     return (
       <View  style={styles.container}>
-        {
-         this.state.controls.email.valid ?
-          <Text style={styles.text}>Email</Text> :
-          <Text style={styles.textWarning}>{this.state.controls.email.validationMessage}</Text>
-        }
-        <TextInput
-          style={styles.textInput}
+        <CustomInputText
+          labelName={this.state.controls.email.label}
+          fieldName='email'
+          isValid={this.state.controls.email.valid}
+          validationMessage={this.state.controls.email.validationMessage}
+          value={this.state.controls.email.value}
           onChangeText={(val) => this.updateState('email', val)}
           onEndEditing={() => this.validateForm('email')}
-          value={this.state.email}
-        />
-        {
-         this.state.controls.password.valid ?
-          <Text style={styles.text}>Password</Text> :
-          <Text style={styles.textWarning}>{this.state.controls.password.validationMessage}</Text>
-        }
-        <TextInput
-          style={styles.textInput}
+          />
+        <CustomInputText
+          labelName={this.state.controls.password.label}
+          fieldName='password'
+          isValid={this.state.controls.password.valid}
+          validationMessage={this.state.controls.password.validationMessage}
+          value={this.state.controls.password.value}
           onChangeText={(val) => this.updateState('password', val)}
           onEndEditing={() => this.validateForm('password')}
-          value={this.state.password}
-        />
+          />
         <View style={styles.buttonContainer}>
           <Button
             title='Login In'
@@ -184,10 +189,16 @@ class LoginScreen extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user.user,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     loginUser: (user) => dispatch(loginUser(user))
   };
 };
 
-export default connect(null, mapDispatchToProps)(LoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
