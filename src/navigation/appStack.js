@@ -10,7 +10,7 @@ const AppStack = createStackNavigator({
   SignUp: SignUpScreen
 },
 {
-  initialRouteName: 'Home',
+  initialRouteName: 'Login',
 });
 
 export default AppStack;
