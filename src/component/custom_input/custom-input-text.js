@@ -1,5 +1,5 @@
 import React from "react";
-import styles from '../../containers/sign-up-screen/sign-up-screen-style';
+import styles from './custom-input-text-style';
 import { View, TextInput, Text } from "react-native";
 
 const customInputText = props => {
@@ -14,7 +14,7 @@ const customInputText = props => {
       placeholder={props.labelName}
       style={styles.textInput}
       onChangeText={(val) => props.onChangeText(val)}
-      onEndEditing={() => props.onEndEditing}
+      onEndEditing={() => props.onEndEditing()}
       value={props.value}
     />
     </View>
