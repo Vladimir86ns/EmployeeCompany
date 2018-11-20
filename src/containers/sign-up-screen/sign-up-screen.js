@@ -8,8 +8,9 @@ import CustomInputText from '../../component/custom_input/custom-input-text';
 import { View, Text, Picker } from 'react-native';
 
 import {
-  saveUser
-} from "../../store/user/user-action/userActionIndex";
+  saveUser,
+  fetchCompanies
+} from "../../store/indexReducerData";
 
 class SignUpScreen extends Component {
 
@@ -85,7 +86,7 @@ class SignUpScreen extends Component {
   };
 
   componentWillMount() {
-    this.fetchCompanies();
+    this.props.fetchCompanies();
   }
 
   /**
@@ -181,26 +182,11 @@ class SignUpScreen extends Component {
   }
 
   /**
-   * Fetch companies from server.
-   */
-  fetchCompanies = () => {
-    axios.get('/company/all')
-    .then(success => {
-      this.setState({
-        companies: success.data.data
-      })
-    })
-    .catch(error => {
-      alert(error)
-    });
-  }
-
-  /**
    * Check state has companies and display it.
    */
   getCompanies = () => {
     let companies;
-    if (this.state.companies.length === 0) {
+    if (Object.keys(this.props.company.allCompanies).length === 0) {
       companies = <Text style={styles.text}>Loading Companies...</Text>
     } else {
       companies =
@@ -216,7 +202,7 @@ class SignUpScreen extends Component {
           onValueChange={(val) => this.updateState('company_id', val)}>
           <Picker.Item key={0} label="Choose company" value={0} />
           {
-            this.state.companies.map(company => {
+            this.props.company.allCompanies.map(company => {
               return <Picker.Item key={company.id} label={company.name + ` (${company.city})`} value={company.id} />
             })
           }
@@ -308,13 +294,15 @@ const mapStateToProps = state => {
   return {
     user: state.user.user,
     navigator: state.navigator,
-    formValidation: state.formValidation
+    formValidation: state.formValidation,
+    company: state.company
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveUser: (user) => dispatch(saveUser(user))
+    saveUser: (user) => dispatch(saveUser(user)),
+    fetchCompanies: () => dispatch(fetchCompanies())
   };
 };
 
