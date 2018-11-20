@@ -13,6 +13,11 @@ import {
 
 class LoginScreen extends Component {
 
+  static navigationOptions = {
+    title: 'Login In',
+    headerLeft: null
+  };
+
   state = {
     controls: {
       email: {
@@ -37,10 +42,6 @@ class LoginScreen extends Component {
       },
     },
     formValid: true
-  };
-
-  static navigationOptions = {
-    title: 'Login In',
   };
 
   componentWillMount(){

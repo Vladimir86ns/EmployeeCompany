@@ -5,7 +5,7 @@ import { View, Text, StyleSheet} from 'react-native';
 class HomeScreen extends Component {
 
   static navigationOptions = {
-    title:  'Home',
+    title:  'Home'
   };
 
   componentWillMount(){
