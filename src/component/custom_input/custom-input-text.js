@@ -16,6 +16,7 @@ const customInputText = props => {
       onChangeText={(val) => props.onChangeText(val)}
       onEndEditing={() => props.onEndEditing()}
       value={props.value}
+      secureTextEntry={props.secureTextEntry}
     />
     </View>
   );

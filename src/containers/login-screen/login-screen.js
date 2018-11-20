@@ -169,6 +169,7 @@ class LoginScreen extends Component {
           isValid={this.state.controls.password.valid}
           validationMessage={this.state.controls.password.validationMessage}
           value={this.state.controls.password.value}
+          secureTextEntry={true}
           onChangeText={(val) => this.updateState('password', val)}
           onEndEditing={() => this.validateForm('password')}
           />
