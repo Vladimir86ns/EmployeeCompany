@@ -1,0 +1,1 @@
+export { redirectTo, resetNavigator } from './navigatorActionData';
