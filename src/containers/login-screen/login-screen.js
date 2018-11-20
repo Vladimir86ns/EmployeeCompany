@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import axios from '../../../axios';
 import styles from './login-screen-style';
 import { View } from 'react-native';
 import validate from '../../utility/validation';
@@ -10,7 +9,7 @@ import { Button } from 'react-native-elements';
 
 import {
   loginUser
-} from "../../store/user/user-action/userActionIndex";
+} from "../../store/indexReducerData";
 
 class LoginScreen extends Component {
 
@@ -36,7 +35,8 @@ class LoginScreen extends Component {
           minLength: 3
         }
       },
-    }
+    },
+    formValid: true
   };
 
   static navigationOptions = {
@@ -134,21 +134,21 @@ class LoginScreen extends Component {
     }, time);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.navigator.componentName !== nextProps.navigator.componentName) {
+      this.props.navigation.navigate(nextProps.navigator.componentName);
+    }
+
+    if (this.props.formValidation.errorMessages !== nextProps.formValidation.errorMessages) {
+      this.updateValidationMessages(nextProps.formValidation.errorMessages);
+    }
+  }
+
   /**
    * Login employee
    */
   loginUser = () => {
-    let {email, password} = this.state.controls;
-
-    axios.get(`/employee/login-employee?email=${email.value}&password=${password.value}`)
-    .then(suc =>{
-        this.props.loginUser(suc.data)
-        this.props.navigation.navigate('Home')
-      }
-    )
-    .catch(err => {
-      this.updateValidationMessages(err.response.data);
-    })
+    this.props.loginUser(this.state.controls);
   }
 
   render() {
@@ -192,12 +192,14 @@ class LoginScreen extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user.user,
+    navigator: state.navigator,
+    formValidation: state.formValidation
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginUser: (user) => dispatch(loginUser(user))
+    loginUser: (user) => dispatch(loginUser(user)),
   };
 };
 

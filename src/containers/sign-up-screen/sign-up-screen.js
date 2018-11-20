@@ -177,24 +177,7 @@ class SignUpScreen extends Component {
    * Register employee
    */
   registerUser = () => {
-    let {first_name, last_name, email, password, password_confirm, company_id} = this.state.controls;
-
-    axios.post('/employee/register-employee', {
-      first_name: first_name.value,
-      last_name: last_name.value,
-      email: email.value,
-      password: password.value,
-      password_confirm: password_confirm.value,
-      company_id: company_id.value
-    })
-    .then(suc =>{
-        this.props.saveUser(suc.data)
-        this.props.navigation.navigate('Home')
-      }
-    )
-    .catch(err => {
-      this.updateValidationMessages(err.response.data);
-    })
+    this.props.saveUser(this.state.controls)
   }
 
   /**
@@ -244,8 +227,18 @@ class SignUpScreen extends Component {
     return companies;
   }
 
-  render() {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.navigator.componentName !== nextProps.navigator.componentName) {
+      this.props.navigation.navigate(nextProps.navigator.componentName);
+    }
 
+    if (this.props.formValidation.errorMessages !== nextProps.formValidation.errorMessages) {
+      this.updateValidationMessages(nextProps.formValidation.errorMessages);
+    }
+  }
+
+
+  render() {
     return (
       <View  style={styles.container}>
         <CustomInputText
@@ -314,6 +307,8 @@ class SignUpScreen extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user.user,
+    navigator: state.navigator,
+    formValidation: state.formValidation
   };
 };
 
