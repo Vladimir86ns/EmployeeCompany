@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Button } from 'react-native-elements';
-import axios from '../../../axios';
 import validate from '../../utility/validation';
 import styles from './sign-up-screen-style';
 import CustomInputText from '../../component/custom_input/custom-input-text';
-import { View, Text, Picker, KeyboardAvoidingView, ScrollView} from 'react-native';
+import { View, Text, Picker, KeyboardAvoidingView, ScrollView } from 'react-native';
 
 import {
   saveUser,
@@ -16,6 +15,7 @@ class SignUpScreen extends Component {
 
   static navigationOptions = {
     title: 'Sign In',
+    headerLeft: null
   };
 
   state = {
@@ -223,10 +223,9 @@ class SignUpScreen extends Component {
     }
   }
 
-
   render() {
     return (
-      <KeyboardAvoidingView keyboardVerticalOffset={-70} behavior='position'>
+      <KeyboardAvoidingView keyboardVerticalOffset={-85} behavior='position'>
         <ScrollView>
           <View  style={styles.container}>
             <CustomInputText
