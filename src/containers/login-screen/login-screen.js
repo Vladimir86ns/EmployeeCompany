@@ -15,7 +15,7 @@ class LoginScreen extends Component {
 
   static navigationOptions = {
     title: 'Login In',
-    headerLeft: null
+    headerLeft: null,
   };
 
   state = {
