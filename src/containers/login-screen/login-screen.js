@@ -19,7 +19,7 @@ import {
 class LoginScreen extends Component {
 
   static navigationOptions = {
-    title: 'Login Inaaa',
+    title: 'Login In',
     headerLeft: null,
     header: null,
   };
