@@ -35,7 +35,6 @@ class HomeScreen extends Component {
   render() {
 
     let currentDate = new Date();
-    let finishHours = new Date().setHours(8);
 
     return (
       <Container>
