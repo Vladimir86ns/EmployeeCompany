@@ -7,6 +7,11 @@ import CustomInputText from '../../component/custom_input/custom-input-text';
 import { View, Text, Picker, KeyboardAvoidingView, ScrollView } from 'react-native';
 
 import {
+  Header,
+  Title,
+} from "native-base";
+
+import {
   saveUser,
   fetchCompanies
 } from "../../store/indexReducerData";
@@ -15,7 +20,8 @@ class SignUpScreen extends Component {
 
   static navigationOptions = {
     title: 'Sign In',
-    headerLeft: null
+    headerLeft: null,
+    header: null
   };
 
   state = {
@@ -226,67 +232,75 @@ class SignUpScreen extends Component {
   render() {
     return (
       <KeyboardAvoidingView keyboardVerticalOffset={-85} behavior='position'>
+
         <ScrollView>
-          <View  style={styles.container}>
-            <CustomInputText
-              labelName={this.state.controls.first_name.label}
-              fieldName='first_name'
-              isValid={this.state.controls.first_name.valid}
-              validationMessage={this.state.controls.first_name.validationMessage}
-              value={this.state.controls.first_name.value}
-              onChangeText={(val) => this.updateState('first_name', val)}
-              onEndEditing={() => this.validateForm('first_name')}
-              />
-            <CustomInputText
-              labelName={this.state.controls.last_name.label}
-              fieldName='last_name'
-              isValid={this.state.controls.last_name.valid}
-              validationMessage={this.state.controls.last_name.validationMessage}
-              value={this.state.controls.last_name.value}
-              onChangeText={(val) => this.updateState('last_name', val)}
-              onEndEditing={() => this.validateForm('last_name')}
-              />
-            <CustomInputText
-              labelName={this.state.controls.email.label}
-              fieldName='email'
-              isValid={this.state.controls.email.valid}
-              validationMessage={this.state.controls.email.validationMessage}
-              value={this.state.controls.email.value}
-              onChangeText={(val) => this.updateState('email', val)}
-              onEndEditing={() => this.validateForm('email')}
-              />
-            <CustomInputText
-              labelName={this.state.controls.password.label}
-              fieldName='password'
-              isValid={this.state.controls.password.valid}
-              validationMessage={this.state.controls.password.validationMessage}
-              value={this.state.controls.password.value}
-              secureTextEntry={true}
-              onChangeText={(val) => this.updateState('password', val)}
-              onEndEditing={() => this.validateForm('password')}
-              />
-            <CustomInputText
-              labelName={this.state.controls.password_confirm.label}
-              fieldName='password_confirm'
-              isValid={this.state.controls.password_confirm.valid}
-              validationMessage={this.state.controls.password_confirm.validationMessage}
-              value={this.state.controls.password_confirm.value}
-              secureTextEntry={true}
-              onChangeText={(val) => this.updateState('password_confirm', val)}
-              onEndEditing={() => this.validateForm('password_confirm')}
-              />
-            {this.getCompanies()}
-            <View style={styles.buttonContainer}>
-              <Button
-                title='Login In'
-                buttonStyle={styles.buttonRed}
-                onPress={() => this.props.navigation.navigate('Login')}
+          <View>
+            <View>
+              <Header>
+                <Title style={{ fontSize: 20, marginTop: 12 }}>Sign Up</Title>
+              </Header>
+            </View>
+            <View  style={styles.container}>
+              <CustomInputText
+                labelName={this.state.controls.first_name.label}
+                fieldName='first_name'
+                isValid={this.state.controls.first_name.valid}
+                validationMessage={this.state.controls.first_name.validationMessage}
+                value={this.state.controls.first_name.value}
+                onChangeText={(val) => this.updateState('first_name', val)}
+                onEndEditing={() => this.validateForm('first_name')}
                 />
-              <Button
-                buttonStyle={styles.buttonGreen}
-                title='Register'
-                onPress={() => this.registerUser()}
-              />
+              <CustomInputText
+                labelName={this.state.controls.last_name.label}
+                fieldName='last_name'
+                isValid={this.state.controls.last_name.valid}
+                validationMessage={this.state.controls.last_name.validationMessage}
+                value={this.state.controls.last_name.value}
+                onChangeText={(val) => this.updateState('last_name', val)}
+                onEndEditing={() => this.validateForm('last_name')}
+                />
+              <CustomInputText
+                labelName={this.state.controls.email.label}
+                fieldName='email'
+                isValid={this.state.controls.email.valid}
+                validationMessage={this.state.controls.email.validationMessage}
+                value={this.state.controls.email.value}
+                onChangeText={(val) => this.updateState('email', val)}
+                onEndEditing={() => this.validateForm('email')}
+                />
+              <CustomInputText
+                labelName={this.state.controls.password.label}
+                fieldName='password'
+                isValid={this.state.controls.password.valid}
+                validationMessage={this.state.controls.password.validationMessage}
+                value={this.state.controls.password.value}
+                secureTextEntry={true}
+                onChangeText={(val) => this.updateState('password', val)}
+                onEndEditing={() => this.validateForm('password')}
+                />
+              <CustomInputText
+                labelName={this.state.controls.password_confirm.label}
+                fieldName='password_confirm'
+                isValid={this.state.controls.password_confirm.valid}
+                validationMessage={this.state.controls.password_confirm.validationMessage}
+                value={this.state.controls.password_confirm.value}
+                secureTextEntry={true}
+                onChangeText={(val) => this.updateState('password_confirm', val)}
+                onEndEditing={() => this.validateForm('password_confirm')}
+                />
+              {this.getCompanies()}
+              <View style={styles.buttonContainer}>
+                <Button
+                  title='Login In'
+                  buttonStyle={styles.buttonRed}
+                  onPress={() => this.props.navigation.navigate('Login')}
+                  />
+                <Button
+                  buttonStyle={styles.buttonGreen}
+                  title='Register'
+                  onPress={() => this.registerUser()}
+                />
+              </View>
             </View>
           </View>
         </ScrollView>

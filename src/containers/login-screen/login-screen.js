@@ -8,14 +8,20 @@ import CustomInputText from '../../component/custom_input/custom-input-text';
 import { Button } from 'react-native-elements';
 
 import {
+  Header,
+  Title,
+} from "native-base";
+
+import {
   loginUser
 } from "../../store/indexReducerData";
 
 class LoginScreen extends Component {
 
   static navigationOptions = {
-    title: 'Login In',
+    title: 'Login Inaaa',
     headerLeft: null,
+    header: null,
   };
 
   state = {
@@ -154,6 +160,13 @@ class LoginScreen extends Component {
 
   render() {
     return (
+    <View>
+      <View>
+        <Header>
+          <Title style={{ fontSize: 20, marginTop: 12 }}>Login In</Title>
+        </Header>
+      </View>
+
       <View  style={styles.container}>
         <CustomInputText
           labelName={this.state.controls.email.label}
@@ -186,6 +199,7 @@ class LoginScreen extends Component {
             onPress={() => this.props.navigation.navigate('SignUp')}
           />
         </View>
+      </View>
       </View>
     );
   }
