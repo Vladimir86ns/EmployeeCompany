@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { View, Text, StyleSheet} from 'react-native';
+import { Container, Header, Content, Card, Title, Left, Button, Icon, Right, CardItem, Text, Body } from "native-base";
 
 class HomeScreen extends Component {
 
   static navigationOptions = {
-    title:  'Home'
+    title: 'Home',
+    headerLeft: null,
+    header: null,
   };
 
   componentWillMount(){
@@ -15,10 +17,41 @@ class HomeScreen extends Component {
   }
 
   render() {
+
+    let currentDate = new Date();
+    let finishHours = new Date().setHours(8);
+
     return (
-      <View  style={styles.container}>
-        <Text style={styles.text}>Welcome: {this.props.user.first_name}</Text>
-      </View>
+      <Container>
+        <Header headerStyle={{color: "red"}}>
+          <Left>
+            <Button transparent onPress={() => alert('opaa')}>
+            <Icon name='menu' />
+            </Button>
+          </Left>
+          <Title style={{ fontSize: 20, marginTop: 12 }}>Welcome {this.props.user.first_name}</Title>
+          <Right>
+            <Button transparent>
+            </Button>
+          </Right>
+        </Header>
+        <Content padder>
+          <Card>
+            <CardItem header bordered>
+              <Text
+              style={{ fontSize: 30 }}
+              >Your login time {currentDate.getHours()}:{currentDate.getMinutes()}h </Text>
+            </CardItem>
+            <CardItem>
+              <Body>
+                <Text>
+                  Welcome to your company!
+                </Text>
+              </Body>
+            </CardItem>
+          </Card>
+        </Content>
+      </Container>
     );
   }
 }
@@ -30,15 +63,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, null)(HomeScreen);
-
-var styles = StyleSheet.create({
-  container: {
-    marginLeft: '10%',
-    marginRight: '10%'
-  },
-  text: {
-    fontSize: 20,
-    marginTop: 3,
-    textAlign: 'center'
-  },
-});
