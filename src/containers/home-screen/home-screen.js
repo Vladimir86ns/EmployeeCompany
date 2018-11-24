@@ -44,6 +44,8 @@ class HomeScreen extends Component {
   }
 
   render() {
+    let currentDate = new Date();
+
     return (
       <Drawer
         type='displace'
