@@ -4,6 +4,7 @@ import HeaderComponent from '../../component/home-screen-component/headerHomeScr
 import LoginTimeComponent from '../../component/home-screen-component/loginTimeHomeScreenComponent';
 import OrderComponent from '../../component/home-screen-component/orderHomeScreenComponent';
 import FooterComponent from '../../component/home-screen-component/footerHomeScreenComponent';
+import { getCurrentDate } from '../../utility/timeHelper';
 
 import {
   Container,
@@ -28,10 +29,10 @@ class HomeScreen extends Component {
     }
   }
 
-
   closeDrawer = () => {
     this.drawer._root.close()
   };
+
   openDrawer = () => {
     this.drawer._root.open()
   };
@@ -44,18 +45,20 @@ class HomeScreen extends Component {
     alert('makeNotice');
   }
 
+  /**
+   * Check first does employee has schedule for given day, and then,
+   * compare employee time for login from schedule, with current time.
+   *
+   * @returns {mix} return Alert, of boolean.
+   */
   isLoggedOnTime = () => {
     let { from_date, to_date, from_time } = this.props.user.schedule;
 
-    let today = new Date();
-    let currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    let currentTime = (today.getHours().length = 1 ? '0' + today.getHours() : today.getHours()) + ':' + today.getMinutes() + ':00';
-
-    if (currentDate <= from_date && currentDate >= to_date) {
-      alert('you do not have schedule for today');
+    if (getCurrentDate() <= from_date && getCurrentDate() >= to_date) {
+      alert('you do not have schedule for today!');
     }
 
-    return currentTime <= from_time;
+    return getCurrentDate() <= from_time;
   }
 
   render() {

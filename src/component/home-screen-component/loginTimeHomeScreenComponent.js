@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { getCurrentHours, getCurrentMinutes } from '../../utility/timeHelper';
 import {
   Card,
   Button,
@@ -9,13 +11,12 @@ import {
 } from "native-base";
 
  const loginTimeHomeScreenComponent = props => {
-  let currentDate = new Date();
     return (
       <Card>
       <CardItem header bordered>
         <Text
         style={{ fontSize: 30, color: props.clockClass ? 'green' : 'red' }}
-        >Login time {currentDate.getHours().toString().length < 1 ? '0' + currentDate.getHours() : currentDate.getHours()}:{currentDate.getMinutes()}h </Text>
+        >Login time { getCurrentHours() } : { getCurrentMinutes() }h </Text>
       </CardItem>
 
       <CardItem>
