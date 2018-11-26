@@ -28,7 +28,7 @@ class LoginScreen extends Component {
     controls: {
       email: {
         label: 'Email',
-        value: 'DejanNikolicEmployee@gmail.com',
+        value: '',
         valid: true,
         validationMessage: '',
         validationRules: {
@@ -38,7 +38,7 @@ class LoginScreen extends Component {
       },
       password: {
         label: 'Password',
-        value: 'test123',
+        value: '',
         valid: true,
         validationMessage: '',
         validationRules: {
