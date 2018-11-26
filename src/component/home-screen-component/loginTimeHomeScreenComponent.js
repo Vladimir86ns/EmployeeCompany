@@ -14,8 +14,8 @@ import {
       <Card>
       <CardItem header bordered>
         <Text
-        style={{ fontSize: 30 }}
-        >Login time {currentDate.getHours()}:{currentDate.getMinutes()}h </Text>
+        style={{ fontSize: 30, color: props.clockClass ? 'green' : 'red' }}
+        >Login time {currentDate.getHours().toString().length < 1 ? '0' + currentDate.getHours() : currentDate.getHours()}:{currentDate.getMinutes()}h </Text>
       </CardItem>
 
       <CardItem>

@@ -28,6 +28,7 @@ class HomeScreen extends Component {
     }
   }
 
+
   closeDrawer = () => {
     this.drawer._root.close()
   };
@@ -43,9 +44,21 @@ class HomeScreen extends Component {
     alert('makeNotice');
   }
 
-  render() {
-    let currentDate = new Date();
+  isLoggedOnTime = () => {
+    let { from_date, to_date, from_time } = this.props.user.schedule;
 
+    let today = new Date();
+    let currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    let currentTime = (today.getHours().length = 1 ? '0' + today.getHours() : today.getHours()) + ':' + today.getMinutes() + ':00';
+
+    if (currentDate <= from_date && currentDate >= to_date) {
+      alert('you do not have schedule for today');
+    }
+
+    return currentTime <= from_time;
+  }
+
+  render() {
     return (
       <Drawer
         type='displace'
@@ -84,6 +97,7 @@ class HomeScreen extends Component {
             user={this.props.user}
             onAccept={() => this.onAccept()}
             makeNotice={() => this.makeNotice()}
+            clockClass={this.isLoggedOnTime()}
             />
           <OrderComponent/>
         </Content>
