@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import styles from './login-screen-style';
+import styles from './LoginScreenStyle';
 import { View } from 'react-native';
 import validate from '../../utility/validation';
-import CustomInputText from '../../component/custom_input/custom-input-text';
+import CustomInputText from '../../component/CustomInputText/CustomInputText';
 
 import { Button } from 'react-native-elements';
 
