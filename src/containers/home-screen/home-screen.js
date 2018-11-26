@@ -4,6 +4,7 @@ import HeaderComponent from '../../component/home-screen-component/headerHomeScr
 import LoginTimeComponent from '../../component/home-screen-component/loginTimeHomeScreenComponent';
 import OrderComponent from '../../component/home-screen-component/orderHomeScreenComponent';
 import FooterComponent from '../../component/home-screen-component/footerHomeScreenComponent';
+import { getCurrentDate } from '../../utility/timeHelper';
 
 import {
   Container,
@@ -31,6 +32,7 @@ class HomeScreen extends Component {
   closeDrawer = () => {
     this.drawer._root.close()
   };
+
   openDrawer = () => {
     this.drawer._root.open()
   };
@@ -43,9 +45,23 @@ class HomeScreen extends Component {
     alert('makeNotice');
   }
 
-  render() {
-    let currentDate = new Date();
+  /**
+   * Check first does employee has schedule for given day, and then,
+   * compare employee time for login from schedule, with current time.
+   *
+   * @returns {mix} return Alert, of boolean.
+   */
+  isLoggedOnTime = () => {
+    let { from_date, to_date, from_time } = this.props.user.schedule;
 
+    if (getCurrentDate() <= from_date && getCurrentDate() >= to_date) {
+      alert('you do not have schedule for today!');
+    }
+
+    return getCurrentDate() <= from_time;
+  }
+
+  render() {
     return (
       <Drawer
         type='displace'
@@ -84,6 +100,7 @@ class HomeScreen extends Component {
             user={this.props.user}
             onAccept={() => this.onAccept()}
             makeNotice={() => this.makeNotice()}
+            clockClass={this.isLoggedOnTime()}
             />
           <OrderComponent/>
         </Content>
