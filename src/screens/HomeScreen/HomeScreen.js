@@ -25,6 +25,10 @@ class HomeScreen extends Component {
     if (Object.keys(this.props.user).length === 0) {
       this.props.navigation.navigate('Login');
     }
+
+    if (!this.props.user.employee_active) {
+      this.props.navigation.navigate('NotActiveEmployee');
+    }
   }
 
   closeDrawer = () => {
