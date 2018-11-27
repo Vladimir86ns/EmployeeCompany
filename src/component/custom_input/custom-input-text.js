@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './CustomInputTextStyle';
+import styles from './custom-input-text-style';
 import { View, TextInput, Text } from "react-native";
 
 const customInputText = props => {

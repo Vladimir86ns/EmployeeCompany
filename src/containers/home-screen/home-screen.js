@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import HeaderComponent from '../../component/HomeScreenComponent/HeaderHomeScreenComponent';
-import LoginTimeComponent from '../../component/HomeScreenComponent/LoginTimeHomeScreenComponent';
-import OrderComponent from '../../component/HomeScreenComponent/OrderHomeScreenComponent';
-import FooterComponent from '../../component/HomeScreenComponent/FooterHomeScreenComponent';
+import HeaderComponent from '../../component/home-screen-component/headerHomeScreenComponent';
+import LoginTimeComponent from '../../component/home-screen-component/loginTimeHomeScreenComponent';
+import OrderComponent from '../../component/home-screen-component/orderHomeScreenComponent';
+import FooterComponent from '../../component/home-screen-component/footerHomeScreenComponent';
 import { getCurrentDate } from '../../utility/timeHelper';
 
 import {
