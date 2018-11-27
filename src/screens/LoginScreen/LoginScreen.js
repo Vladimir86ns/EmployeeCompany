@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import styles from './login-screen-style';
+import styles from './LoginScreenStyle';
 import { View } from 'react-native';
 import validate from '../../utility/validation';
-import CustomInputText from '../../component/custom_input/custom-input-text';
+import CustomInputText from '../../component/CustomInputComponent/CustomInputTextComponent';
 
 import { Button } from 'react-native-elements';
 
@@ -19,8 +19,6 @@ import {
 class LoginScreen extends Component {
 
   static navigationOptions = {
-    title: 'Login In',
-    headerLeft: null,
     header: null,
   };
 
@@ -28,7 +26,7 @@ class LoginScreen extends Component {
     controls: {
       email: {
         label: 'Email',
-        value: '',
+        value: 'DejanNikolicEmployee@gmail.com',
         valid: true,
         validationMessage: '',
         validationRules: {
@@ -38,7 +36,7 @@ class LoginScreen extends Component {
       },
       password: {
         label: 'Password',
-        value: '',
+        value: 'test123',
         valid: true,
         validationMessage: '',
         validationRules: {

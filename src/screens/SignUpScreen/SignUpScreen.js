@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Button } from 'react-native-elements';
 import validate from '../../utility/validation';
-import styles from './sign-up-screen-style';
-import CustomInputText from '../../component/custom_input/custom-input-text';
+import styles from './SignUpScreenStyle';
+import CustomInputText from '../../component/CustomInputComponent/CustomInputTextComponent';
 import { View, Text, Picker, KeyboardAvoidingView, ScrollView } from 'react-native';
 
 import {
@@ -19,8 +19,6 @@ import {
 class SignUpScreen extends Component {
 
   static navigationOptions = {
-    title: 'Sign In',
-    headerLeft: null,
     header: null
   };
 
