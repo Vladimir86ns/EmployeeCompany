@@ -17,9 +17,9 @@ export const getCurrentTime = () => {
 }
 
 export const getCurrentHours = () => {
-  return checkHoursLength() < 1 ? '0' + today.getHours() : today.getHours();
+  return checkHoursLength() === 1 ? '0' + today.getHours() : today.getHours();
 }
 
 export const getCurrentMinutes = () => {
-  return checkMinutesLength() < 1 ? '0' + today.getMinutes() : today.getMinutes();
+  return checkMinutesLength() === 1 ? '0' + today.getMinutes() : today.getMinutes();
 }
